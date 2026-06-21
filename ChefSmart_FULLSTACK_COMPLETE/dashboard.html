@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChefSmart - Trang quản trị</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --primary:#f47a43;--primary-dark:#dc6130;--navy:#17162c;--navy-2:#27214f;
+      --bg:#f4f6fb;--card:#fff;--text:#20223a;--muted:#73788c;--border:#e7e9f1;
+      --green:#2eaa74;--red:#e65058;--purple:#8065c5;--blue:#3c8bdc;--yellow:#f4b942;
+      --shadow:0 12px 35px rgba(34,32,70,.08);--radius:20px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0} body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    button,input,select,textarea{font:inherit} button{cursor:pointer} a{text-decoration:none;color:inherit}
+    .layout{display:flex;min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:275px;padding:24px 18px;background:linear-gradient(180deg,var(--navy),#111022);color:#fff;overflow-y:auto;z-index:30}
+    .brand{display:flex;align-items:center;gap:12px;padding:0 8px 28px}.brand-icon{width:48px;height:48px;border-radius:15px;background:var(--primary);display:grid;place-items:center;font-size:24px}.brand h1{font-size:26px}.brand span{color:var(--primary)}
+    .menu-label{font-size:11px;letter-spacing:1.3px;color:rgba(255,255,255,.38);text-transform:uppercase;margin:21px 12px 9px;font-weight:700}
+    .menu-item{width:100%;border:0;background:transparent;color:rgba(255,255,255,.76);display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:13px;margin-bottom:6px;text-align:left;transition:.2s}.menu-item i{width:22px;text-align:center;font-size:18px}.menu-item:hover,.menu-item.active{background:var(--primary);color:white;transform:translateX(2px)}
+    .main{margin-left:275px;width:calc(100% - 275px);padding:26px}.topbar{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--border);border-radius:20px;padding:18px 22px;box-shadow:var(--shadow)}
+    .topbar h2{font-size:26px;margin-bottom:4px}.topbar p{color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:12px}.profile-chip{display:flex;align-items:center;gap:10px;padding:7px 12px;border:1px solid var(--border);border-radius:28px;background:#fafaff}.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),#ff9c68);color:#fff;font-weight:800}.profile-chip small{display:block;color:var(--muted)}
+    .btn{border:0;border-radius:12px;padding:10px 16px;font-weight:700;display:inline-flex;align-items:center;gap:8px}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark)}.btn-danger{background:var(--red);color:#fff}.btn-light{background:#f2f3f8;color:var(--text)}
+    .page{display:none}.page.active{display:block}.hero{margin-top:22px;background:linear-gradient(135deg,var(--navy),var(--navy-2));border-radius:24px;padding:32px;color:#fff;position:relative;overflow:hidden}.hero:after{content:'🍲';position:absolute;right:25px;top:-32px;font-size:150px;opacity:.12}.hero h3{font-size:29px;margin-bottom:8px}.hero p{color:rgba(255,255,255,.72);max-width:700px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}.stat{background:#fff;border:1px solid var(--border);border-radius:20px;padding:21px;box-shadow:var(--shadow);display:flex;align-items:center;gap:15px}.stat-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:23px}.orange{background:#fff0e8;color:var(--primary)}.green{background:#e9f8f1;color:var(--green)}.purple{background:#f1edfb;color:var(--purple)}.blue{background:#eaf3fd;color:var(--blue)}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{font-size:29px}
+    .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:22px}.panel{background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--border)}.panel-head h3{font-size:20px}.panel-head p{font-size:12px;color:var(--muted);margin-top:3px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}.search{display:flex;align-items:center;gap:8px;background:#f6f7fb;border:1px solid var(--border);border-radius:12px;padding:0 12px}.search input{border:0;outline:0;background:transparent;min-height:40px}
+    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:14px 18px;border-bottom:1px solid var(--border);text-align:left;font-size:13px}th{background:#fafbfe;color:var(--muted);font-size:11px;text-transform:uppercase}tbody tr:hover{background:#fffaf7}.name-cell{display:flex;align-items:center;gap:11px}.thumb{width:44px;height:44px;border-radius:12px;object-fit:cover;background:#fff0e8}.icon-box{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#fff0e8;color:var(--primary);font-size:18px}.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700}.badge-green{background:#eaf8f1;color:var(--green)}.badge-red{background:#feeeee;color:var(--red)}.badge-blue{background:#eaf3fd;color:var(--blue)}
+    .actions{display:flex;gap:6px}.icon-btn{width:34px;height:34px;border:0;border-radius:9px;display:grid;place-items:center}.edit{background:#f1edfb;color:var(--purple)}.delete{background:#feeeee;color:var(--red)}
+    .activity{padding:10px 20px 20px}.activity-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}.activity-item:last-child{border:0}.activity-item strong{display:block;font-size:13px}.activity-item small{color:var(--muted)}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:24px 0 16px}.section-head h3{font-size:25px}.section-head p{color:var(--muted);font-size:13px;margin-top:4px}
+    .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.mini-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.mini-card i{font-size:24px;color:var(--primary);margin-bottom:13px}.mini-card strong{display:block}.mini-card span{font-size:12px;color:var(--muted)}
+    .profile-layout{display:grid;grid-template-columns:320px 1fr;gap:20px}.profile-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:26px;text-align:center;box-shadow:var(--shadow)}.profile-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 15px;background:linear-gradient(135deg,var(--primary),#ffae7e);display:grid;place-items:center;color:#fff;font-size:38px;font-weight:800}.profile-card p{color:var(--muted);font-size:13px}.profile-card .info-line{margin-top:17px;text-align:left;padding:11px 0;border-top:1px solid var(--border)}.profile-card .info-line i{width:25px;color:var(--primary)}
+    .form-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow)}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea{border:2px solid var(--border);border-radius:11px;padding:11px 13px;outline:0;background:#fafbfe}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary);background:#fff}.field textarea{min-height:95px;resize:vertical}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}.modal.open{display:flex}.modal-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:25px;box-shadow:0 25px 70px rgba(0,0,0,.3)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.close{width:36px;height:36px;border:0;border-radius:50%;background:#f0f1f5;font-size:22px}
+    .mobile-menu{display:none}.toast{position:fixed;right:24px;bottom:24px;background:var(--green);color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transform:translateY(50px);transition:.25s;z-index:200}.toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:1200px){.cards{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+    @media(max-width:800px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%;padding:15px}.mobile-menu{display:inline-flex}.profile-chip div:last-child{display:none}.profile-layout{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-icon">🍳</div><h1>Chef<span>Smart</span></h1></div>
+    <div class="menu-label">Tổng quan</div>
+    <button class="menu-item active" data-page="overview"><i class="fas fa-chart-pie"></i>Bảng điều khiển</button>
+    <div class="menu-label">Quản lý dữ liệu</div>
+    <button class="menu-item" data-page="recipes"><i class="fas fa-utensils"></i>Công thức</button>
+    <button class="menu-item" data-page="ingredients"><i class="fas fa-carrot"></i>Nguyên liệu</button>
+    <button class="menu-item" data-page="categories"><i class="fas fa-layer-group"></i>Danh mục</button>
+    <button class="menu-item" data-page="users"><i class="fas fa-users"></i>Người dùng</button>
+    <div class="menu-label">Tài khoản</div>
+    <button class="menu-item" data-page="profile"><i class="fas fa-user-gear"></i>Thông tin cá nhân</button>
+    <a class="menu-item" href="index.html"><i class="fas fa-globe"></i>Về trang chủ</a>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px"><button class="btn btn-light mobile-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button><div><h2 id="pageTitle">Trang quản trị</h2><p id="pageSubtitle">Quản lý toàn bộ hệ thống ChefSmart</p></div></div>
+      <div class="top-actions"><button class="btn btn-light" data-page="profile"><i class="fas fa-gear"></i></button><div class="profile-chip"><div class="avatar" id="topAvatar">A</div><div><strong id="topName">admin</strong><small>Quản trị viên</small></div></div><button class="btn btn-danger" onclick="logout()"><i class="fas fa-right-from-bracket"></i>Đăng xuất</button></div>
+    </header>
+
+    <section class="page active" id="overviewPage">
+      <div class="hero"><h3>Chào mừng trở lại, <span id="welcomeName">admin</span>!</h3><p>Quản lý công thức, nguyên liệu, danh mục, người dùng và thông tin cá nhân trong một giao diện trực quan.</p></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-icon orange"><i class="fas fa-bowl-food"></i></div><div><span>Tổng công thức</span><strong id="statRecipes">5</strong></div></div>
+        <div class="stat"><div class="stat-icon green"><i class="fas fa-carrot"></i></div><div><span>Nguyên liệu</span><strong id="statIngredients">5</strong></div></div>
+        <div class="stat"><div class="stat-icon purple"><i class="fas fa-layer-group"></i></div><div><span>Danh mục</span><strong id="statCategories">5</strong></div></div>
+        <div class="stat"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div><span>Người dùng</span><strong id="statUsers">5</strong></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="panel"><div class="panel-head"><div><h3><i class="fas fa-fire" style="color:var(--primary)"></i> Công thức mới nhất</h3><p>5 món ăn đang có trong hệ thống</p></div><button class="btn btn-primary" onclick="openEntityModal('recipes')"><i class="fas fa-plus"></i>Thêm công thức</button></div><div class="table-wrap"><table><thead><tr><th>Món ăn</th><th>Danh mục</th><th>Thời gian</th><th>Trạng thái</th></tr></thead><tbody id="overviewRecipeRows"></tbody></table></div></div>
+        <div class="panel"><div class="panel-head"><div><h3><i class="fas fa-bell" style="color:var(--primary)"></i> Hoạt động gần đây</h3><p>Cập nhật mới trong hệ thống</p></div></div><div class="activity" id="activityList"></div></div>
+      </div>
+      <div class="section-head"><div><h3>Truy cập nhanh</h3><p>Mở nhanh các mục quản lý chính</p></div></div>
+      <div class="cards">
+        <button class="mini-card" data-page="recipes"><i class="fas fa-utensils"></i><strong>Công thức</strong><span>Quản lý 5 món ăn</span></button>
+        <button class="mini-card" data-page="ingredients"><i class="fas fa-seedling"></i><strong>Nguyên liệu</strong><span>Quản lý 5 nguyên liệu</span></button>
+        <button class="mini-card" data-page="categories"><i class="fas fa-tags"></i><strong>Danh mục</strong><span>Quản lý 5 danh mục</span></button>
+        <button class="mini-card" data-page="users"><i class="fas fa-user-group"></i><strong>Người dùng</strong><span>Quản lý 5 tài khoản</span></button>
+        <button class="mini-card" data-page="profile"><i class="fas fa-id-card"></i><strong>Cá nhân</strong><span>Sửa hồ sơ quản trị</span></button>
+      </div>
+    </section>
+
+    <section class="page" id="recipesPage"><div class="section-head"><div><h3><i class="fas fa-utensils"></i> Quản lý công thức</h3><p>Danh sách 5 công thức chi tiết</p></div><div class="toolbar"><div class="search"><i class="fas fa-search"></i><input placeholder="Tìm món..." oninput="filterTable('recipes',this.value)"></div><button class="btn btn-primary" onclick="openEntityModal('recipes')"><i class="fas fa-plus"></i>Thêm món</button></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Món ăn</th><th>Danh mục</th><th>Thời gian</th><th>Độ khó</th><th>Calories</th><th>Thao tác</th></tr></thead><tbody id="recipesRows"></tbody></table></div></div></section>
+    <section class="page" id="ingredientsPage"><div class="section-head"><div><h3><i class="fas fa-carrot"></i> Quản lý nguyên liệu</h3><p>Danh sách 5 nguyên liệu cụ thể</p></div><div class="toolbar"><div class="search"><i class="fas fa-search"></i><input placeholder="Tìm nguyên liệu..." oninput="filterTable('ingredients',this.value)"></div><button class="btn btn-primary" onclick="openEntityModal('ingredients')"><i class="fas fa-plus"></i>Thêm nguyên liệu</button></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Nguyên liệu</th><th>Nhóm</th><th>Đơn vị</th><th>Tồn kho</th><th>Ghi chú</th><th>Thao tác</th></tr></thead><tbody id="ingredientsRows"></tbody></table></div></div></section>
+    <section class="page" id="categoriesPage"><div class="section-head"><div><h3><i class="fas fa-layer-group"></i> Quản lý danh mục</h3><p>Danh sách 5 danh mục món ăn</p></div><div class="toolbar"><div class="search"><i class="fas fa-search"></i><input placeholder="Tìm danh mục..." oninput="filterTable('categories',this.value)"></div><button class="btn btn-primary" onclick="openEntityModal('categories')"><i class="fas fa-plus"></i>Thêm danh mục</button></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Danh mục</th><th>Biểu tượng</th><th>Số món</th><th>Mô tả</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="categoriesRows"></tbody></table></div></div></section>
+    <section class="page" id="usersPage"><div class="section-head"><div><h3><i class="fas fa-users"></i> Quản lý người dùng</h3><p>Danh sách 5 tài khoản người dùng</p></div><div class="toolbar"><div class="search"><i class="fas fa-search"></i><input placeholder="Tìm người dùng..." oninput="filterTable('users',this.value)"></div><button class="btn btn-primary" onclick="openEntityModal('users')"><i class="fas fa-user-plus"></i>Thêm người dùng</button></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Người dùng</th><th>Email</th><th>Điện thoại</th><th>Vai trò</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="usersRows"></tbody></table></div></div></section>
+
+    <section class="page" id="profilePage">
+      <div class="section-head"><div><h3><i class="fas fa-user-gear"></i> Thông tin cá nhân</h3><p>Có thể chỉnh sửa và lưu hồ sơ quản trị viên</p></div></div>
+      <div class="profile-layout">
+        <div class="profile-card"><div class="profile-avatar" id="profileAvatar">A</div><h3 id="profileDisplayName">admin</h3><p>Quản trị viên ChefSmart</p><div class="info-line"><i class="fas fa-envelope"></i><span id="profileDisplayEmail">admin@chefsmart.vn</span></div><div class="info-line"><i class="fas fa-phone"></i><span id="profileDisplayPhone">0987 654 321</span></div><div class="info-line"><i class="fas fa-location-dot"></i><span id="profileDisplayAddress">Thái Nguyên, Việt Nam</span></div></div>
+        <form class="form-card" id="profileForm"><h3 style="margin-bottom:18px">Chỉnh sửa hồ sơ</h3><div class="form-grid"><div class="field"><label>Họ và tên</label><input id="pfName" required></div><div class="field"><label>Tên đăng nhập</label><input id="pfUsername" required></div><div class="field"><label>Email</label><input id="pfEmail" type="email" required></div><div class="field"><label>Số điện thoại</label><input id="pfPhone" required></div><div class="field full"><label>Địa chỉ</label><input id="pfAddress"></div><div class="field full"><label>Giới thiệu</label><textarea id="pfBio"></textarea></div></div><div style="margin-top:18px;display:flex;justify-content:flex-end"><button class="btn btn-primary" type="submit"><i class="fas fa-floppy-disk"></i>Lưu thông tin</button></div></form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="entityModal"><div class="modal-box"><div class="modal-head"><h3 id="modalTitle">Thêm dữ liệu</h3><button class="close" onclick="closeModal()">×</button></div><form id="entityForm"><div class="form-grid" id="modalFields"></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px"><button type="button" class="btn btn-light" onclick="closeModal()">Hủy</button><button class="btn btn-primary" type="submit"><i class="fas fa-floppy-disk"></i>Lưu</button></div></form></div></div>
+<div class="toast" id="toast">Đã lưu thành công</div>
+
+<script>
+const defaults={
+ recipes:[
+  {id:1,name:'Phở bò Hà Nội',category:'Món chính',time:180,difficulty:'Khó',calories:450,image:'images/pho-bo.png'},
+  {id:2,name:'Gỏi cuốn tôm thịt',category:'Khai vị',time:20,difficulty:'Dễ',calories:180,image:'images/goi-cuon.png'},
+  {id:3,name:'Canh chua cá lóc',category:'Canh và súp',time:40,difficulty:'Trung bình',calories:220,image:'images/canh-chua-ca.png'},
+  {id:4,name:'Gà nướng mật ong',category:'Món chính',time:75,difficulty:'Trung bình',calories:380,image:'images/ga-nuong.png'},
+  {id:5,name:'Bò kho bánh mì',category:'Món chính',time:120,difficulty:'Trung bình',calories:420,image:'images/bo-kho.png'}
+ ],
+ ingredients:[
+  {id:1,name:'Thịt bò',icon:'🥩',group:'Thịt',unit:'kg',stock:12,note:'Bảo quản ngăn mát'},
+  {id:2,name:'Tôm tươi',icon:'🦐',group:'Hải sản',unit:'kg',stock:8,note:'Dùng trong ngày'},
+  {id:3,name:'Cà chua',icon:'🍅',group:'Rau củ',unit:'kg',stock:15,note:'Chọn quả chín đỏ'},
+  {id:4,name:'Hành tây',icon:'🧅',group:'Rau củ',unit:'kg',stock:10,note:'Bảo quản nơi khô'},
+  {id:5,name:'Bánh phở',icon:'🍜',group:'Tinh bột',unit:'kg',stock:20,note:'Dùng cho phở bò'}
+ ],
+ categories:[
+  {id:1,name:'Món chính',icon:'🍖',count:3,description:'Các món ăn chính trong bữa ăn',status:'Hoạt động'},
+  {id:2,name:'Khai vị',icon:'🥗',count:1,description:'Món nhẹ dùng trước bữa chính',status:'Hoạt động'},
+  {id:3,name:'Canh và súp',icon:'🍲',count:1,description:'Các món canh, súp và nước dùng',status:'Hoạt động'},
+  {id:4,name:'Món nhanh',icon:'⚡',count:0,description:'Món có thời gian nấu dưới 30 phút',status:'Hoạt động'},
+  {id:5,name:'Tráng miệng',icon:'🍮',count:0,description:'Bánh, chè và món ngọt',status:'Hoạt động'}
+ ],
+ users:[
+  {id:1,name:'Nguyễn Văn An',email:'an@gmail.com',phone:'0988 111 222',role:'Người dùng',status:'Hoạt động'},
+  {id:2,name:'Trần Thị Bình',email:'binh@gmail.com',phone:'0977 333 444',role:'Biên tập viên',status:'Hoạt động'},
+  {id:3,name:'Lê Hoàng Nam',email:'nam@gmail.com',phone:'0966 555 666',role:'Người dùng',status:'Hoạt động'},
+  {id:4,name:'Phạm Thu Hà',email:'ha@gmail.com',phone:'0955 777 888',role:'Người dùng',status:'Tạm khóa'},
+  {id:5,name:'Vũ Minh Đức',email:'duc@gmail.com',phone:'0944 999 000',role:'Quản trị viên',status:'Hoạt động'}
+ ]
+};
+let data=JSON.parse(localStorage.getItem('chefAdminData')||'null')||structuredClone(defaults);let currentType='',editingId=null;
+let profile=JSON.parse(localStorage.getItem('chefProfile')||'null')||{name:'Quản trị viên ChefSmart',username:'admin',email:'admin@chefsmart.vn',phone:'0987 654 321',address:'Thái Nguyên, Việt Nam',bio:'Quản lý nội dung và dữ liệu của hệ thống ChefSmart.'};
+const titles={overview:['Trang quản trị','Quản lý toàn bộ hệ thống ChefSmart'],recipes:['Quản lý công thức','Thêm, sửa, xóa và theo dõi món ăn'],ingredients:['Quản lý nguyên liệu','Theo dõi danh sách và tồn kho nguyên liệu'],categories:['Quản lý danh mục','Phân loại công thức theo nhóm món ăn'],users:['Quản lý người dùng','Quản lý tài khoản và quyền truy cập'],profile:['Thông tin cá nhân','Cập nhật hồ sơ quản trị viên']};
+function saveData(){localStorage.setItem('chefAdminData',JSON.stringify(data));renderAll()}
+function showPage(page){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(page+'Page').classList.add('active');document.querySelectorAll('.menu-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));document.getElementById('pageTitle').textContent=titles[page][0];document.getElementById('pageSubtitle').textContent=titles[page][1];document.getElementById('sidebar').classList.remove('open')}
+document.querySelectorAll('[data-page]').forEach(x=>x.addEventListener('click',()=>showPage(x.dataset.page)));
+function renderAll(){renderRecipes();renderIngredients();renderCategories();renderUsers();document.getElementById('statRecipes').textContent=data.recipes.length;document.getElementById('statIngredients').textContent=data.ingredients.length;document.getElementById('statCategories').textContent=data.categories.length;document.getElementById('statUsers').textContent=data.users.length;document.getElementById('overviewRecipeRows').innerHTML=data.recipes.slice(0,5).map(r=>`<tr><td><div class="name-cell"><img class="thumb" src="${r.image}"><strong>${r.name}</strong></div></td><td>${r.category}</td><td>${r.time} phút</td><td><span class="badge badge-green">Hiển thị</span></td></tr>`).join('');document.getElementById('activityList').innerHTML=[['fa-plus','Thêm công thức',data.recipes[0]?.name||''],['fa-user-plus','Người dùng mới',data.users[0]?.name||''],['fa-pen','Cập nhật danh mục',data.categories[0]?.name||''],['fa-boxes-stacked','Kiểm tra tồn kho',data.ingredients[0]?.name||'']].map(a=>`<div class="activity-item"><div class="icon-box"><i class="fas ${a[0]}"></i></div><div><strong>${a[1]}</strong><small>${a[2]}</small></div></div>`).join('')}
+function renderRecipes(list=data.recipes){document.getElementById('recipesRows').innerHTML=list.map(r=>`<tr><td><div class="name-cell"><img class="thumb" src="${r.image}"><strong>${r.name}</strong></div></td><td>${r.category}</td><td>${r.time} phút</td><td><span class="badge badge-blue">${r.difficulty}</span></td><td>${r.calories} kcal</td><td>${actions('recipes',r.id)}</td></tr>`).join('')}
+function renderIngredients(list=data.ingredients){document.getElementById('ingredientsRows').innerHTML=list.map(r=>`<tr><td><div class="name-cell"><div class="ingredient-symbol">${r.icon||'🥕'}</div><strong>${r.name}</strong></div></td><td>${r.group}</td><td>${r.unit}</td><td>${r.stock}</td><td>${r.note}</td><td>${actions('ingredients',r.id)}</td></tr>`).join('')}
+function renderCategories(list=data.categories){document.getElementById('categoriesRows').innerHTML=list.map(r=>`<tr><td><strong>${r.name}</strong></td><td style="font-size:23px">${r.icon}</td><td>${r.count}</td><td>${r.description}</td><td><span class="badge badge-green">${r.status}</span></td><td>${actions('categories',r.id)}</td></tr>`).join('')}
+function renderUsers(list=data.users){document.getElementById('usersRows').innerHTML=list.map(r=>`<tr><td><div class="name-cell"><div class="avatar">${r.name.charAt(0)}</div><strong>${r.name}</strong></div></td><td>${r.email}</td><td>${r.phone}</td><td><span class="badge badge-blue">${r.role}</span></td><td><span class="badge ${r.status==='Hoạt động'?'badge-green':'badge-red'}">${r.status}</span></td><td>${actions('users',r.id)}</td></tr>`).join('')}
+function actions(type,id){return `<div class="actions"><button class="icon-btn edit" onclick="openEntityModal('${type}',${id})"><i class="fas fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('${type}',${id})"><i class="fas fa-trash"></i></button></div>`}
+function filterTable(type,q){q=q.toLowerCase();let list=data[type].filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));({recipes:renderRecipes,ingredients:renderIngredients,categories:renderCategories,users:renderUsers})[type](list)}
+const fieldDefs={recipes:[['name','Tên món','text'],['category','Danh mục','text'],['time','Thời gian (phút)','number'],['difficulty','Độ khó','text'],['calories','Calories','number'],['image','Đường dẫn ảnh','text']],ingredients:[['name','Tên nguyên liệu','text'],['icon','Biểu tượng','text'],['group','Nhóm','text'],['unit','Đơn vị','text'],['stock','Tồn kho','number'],['note','Ghi chú','text']],categories:[['name','Tên danh mục','text'],['icon','Biểu tượng','text'],['count','Số món','number'],['description','Mô tả','text'],['status','Trạng thái','text']],users:[['name','Họ tên','text'],['email','Email','email'],['phone','Điện thoại','text'],['role','Vai trò','text'],['status','Trạng thái','text']]};
+function openEntityModal(type,id=null){
+ currentType=type;editingId=id;let item=id?data[type].find(x=>x.id===id):{};
+ document.getElementById('modalTitle').textContent=(id?'Sửa ':'Thêm ')+titles[type][0].replace('Quản lý ','').toLowerCase();
+ let html='';
+ if(type==='categories'){
+   const icons=['🍖','🥗','🍲','⚡','🍮','🍜','🍛','🍗','🥘','🍰','🥤','🥦','🍤','🍣','🍕','🍔'];
+   html=`<div class="field"><label>Tên danh mục</label><input name="name" type="text" value="${item.name??''}" required></div>
+   <div class="field"><label>Biểu tượng đã chọn</label><input id="categoryIconInput" name="icon" type="text" value="${item.icon??'🍽️'}" readonly required><div class="icon-picker">${icons.map(i=>`<button type="button" class="icon-choice ${i===(item.icon??'🍽️')?'selected':''}" onclick="selectCategoryIcon('${i}',this)">${i}</button>`).join('')}</div></div>
+   <div class="field"><label>Số món</label><input name="count" type="number" value="${item.count??0}" required></div>
+   <div class="field full"><label>Mô tả</label><input name="description" type="text" value="${item.description??''}" required></div>
+   <div class="field"><label>Trạng thái</label><select name="status" required><option ${item.status==='Hoạt động'?'selected':''}>Hoạt động</option><option ${item.status==='Tạm ẩn'?'selected':''}>Tạm ẩn</option></select></div>`;
+ } else if(type==='ingredients'){
+   const icons=['🥩','🦐','🍅','🧅','🍜','🥕','🧄','🌶️','🥬','🥚','🐟','🍗','🍚','🥔','🧀','🥛'];
+   html=`<div class="field"><label>Tên nguyên liệu</label><input name="name" type="text" value="${item.name??''}" required></div>
+   <div class="field"><label>Biểu tượng đã chọn</label><input id="ingredientIconInput" name="icon" type="text" value="${item.icon??'🥕'}" readonly required><div class="icon-picker">${icons.map(i=>`<button type="button" class="icon-choice ${i===(item.icon??'🥕')?'selected':''}" onclick="selectIngredientIcon('${i}',this)">${i}</button>`).join('')}</div></div>
+   <div class="field"><label>Nhóm</label><select name="group" required>${['Thịt','Hải sản','Rau củ','Tinh bột','Gia vị','Sữa và trứng'].map(v=>`<option ${item.group===v?'selected':''}>${v}</option>`).join('')}</select></div>
+   <div class="field"><label>Đơn vị</label><select name="unit" required>${['kg','g','quả','bó','lít','gói'].map(v=>`<option ${item.unit===v?'selected':''}>${v}</option>`).join('')}</select></div>
+   <div class="field"><label>Tồn kho</label><input name="stock" type="number" value="${item.stock??0}" required></div>
+   <div class="field full"><label>Ghi chú</label><input name="note" type="text" value="${item.note??''}" required></div>`;
+ } else {
+   html=fieldDefs[type].map(f=>`<div class="field ${f[0]==='description'||f[0]==='note'?'full':''}"><label>${f[1]}</label><input name="${f[0]}" type="${f[2]}" value="${item[f[0]]??''}" required></div>`).join('');
+ }
+ document.getElementById('modalFields').innerHTML=html;document.getElementById('entityModal').classList.add('open')}
+function selectCategoryIcon(icon,btn){document.getElementById('categoryIconInput').value=icon;btn.parentElement.querySelectorAll('.icon-choice').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')}
+function selectIngredientIcon(icon,btn){document.getElementById('ingredientIconInput').value=icon;btn.parentElement.querySelectorAll('.icon-choice').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')}
+function closeModal(){document.getElementById('entityModal').classList.remove('open')}
+document.getElementById('entityForm').addEventListener('submit',e=>{e.preventDefault();let obj={};new FormData(e.target).forEach((v,k)=>obj[k]=['time','calories','stock','count'].includes(k)?Number(v):v);if(editingId){Object.assign(data[currentType].find(x=>x.id===editingId),obj)}else{obj.id=Math.max(0,...data[currentType].map(x=>x.id))+1;data[currentType].push(obj)}saveData();closeModal();toast('Đã lưu dữ liệu thành công')});
+function removeItem(type,id){if(confirm('Bạn có chắc muốn xóa mục này?')){data[type]=data[type].filter(x=>x.id!==id);saveData();toast('Đã xóa dữ liệu')}}
+function loadProfile(){pfName.value=profile.name;pfUsername.value=profile.username;pfEmail.value=profile.email;pfPhone.value=profile.phone;pfAddress.value=profile.address;pfBio.value=profile.bio;profileDisplayName.textContent=profile.name;profileDisplayEmail.textContent=profile.email;profileDisplayPhone.textContent=profile.phone;profileDisplayAddress.textContent=profile.address;topName.textContent=profile.username;welcomeName.textContent=profile.username;let initial=profile.name.charAt(0).toUpperCase();topAvatar.textContent=initial;profileAvatar.textContent=initial}
+document.getElementById('profileForm').addEventListener('submit',e=>{e.preventDefault();profile={name:pfName.value,username:pfUsername.value,email:pfEmail.value,phone:pfPhone.value,address:pfAddress.value,bio:pfBio.value};localStorage.setItem('chefProfile',JSON.stringify(profile));loadProfile();toast('Đã cập nhật thông tin cá nhân')});
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function logout(){if(confirm('Bạn có chắc muốn đăng xuất?')){localStorage.removeItem('chefSmartLogin');sessionStorage.removeItem('chefSmartLogin');location.href='index.html'}}
+(function protect(){let raw=localStorage.getItem('chefSmartLogin')||sessionStorage.getItem('chefSmartLogin');if(!raw){alert('Vui lòng đăng nhập trước.');location.href='index.html'}})();
+renderAll();loadProfile();
+</script>
+</body>
+</html>

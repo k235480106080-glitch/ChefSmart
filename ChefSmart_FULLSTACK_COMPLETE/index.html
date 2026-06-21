@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChefSmart - Quản Lý Công Thức Nấu Ăn</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#home">
+      <div class="logo-icon">🍳</div>
+      <span class="logo-text">Chef<span>Smart</span></span>
+    </a>
+    <nav aria-label="Điều hướng chính">
+      <a href="#home" class="active"><i class="fas fa-home"></i> Trang chủ</a>
+      <a href="#recipes"><i class="fas fa-utensils"></i> Công thức</a>
+      <a href="#fridge"><i class="fas fa-snowflake"></i> Tủ lạnh có gì</a>
+      <a href="#features"><i class="fas fa-layer-group"></i> Tính năng</a>
+      <a href="#international"><i class="fas fa-globe"></i> Quốc tế</a>
+      <a href="dashboard.html"><i class="fas fa-chart-line"></i> Quản trị</a>
+      <a href="#addForm" onclick="toggleAddForm(); return false;"><i class="fas fa-plus-circle"></i> Thêm mới</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-primary" onclick="openAuth()">
+        <i class="fas fa-user-circle"></i> Đăng nhập
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero food-portal-hero" id="home">
+  <div class="food-portal-overlay">
+    <div class="food-portal-content">
+      <div class="hero-tag"><i class="fas fa-utensils"></i> CÔNG THỨC NẤU ĂN THÔNG MINH</div>
+      <h1>Khám phá món ngon<br><span class="highlight">mỗi ngày</span></h1>
+      <p>Khám phá công thức Việt Nam và quốc tế, lọc theo nguyên liệu đang có và lưu món yêu thích chỉ với vài thao tác.</p>
+      <div class="hero-cta">
+        <button class="btn-hero-primary" onclick="scrollTo('#fridge')"><i class="fas fa-snowflake"></i> Tủ lạnh có gì?</button>
+        <button class="btn-hero-secondary" onclick="scrollTo('#recipes')"><i class="fas fa-book-open"></i> Xem công thức</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">1,240+</span><span class="stat-label">Công thức</span></div>
+        <div class="stat-item"><span class="stat-num">85+</span><span class="stat-label">Danh mục</span></div>
+        <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label">Quốc gia</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+
+  <!-- OUTSIDE INTRO STRIP -->
+  <section class="intro-strip" id="features">
+    <div class="intro-item" onclick="scrollTo('#recipes')">
+      <div class="intro-icon"><i class="fas fa-database"></i></div>
+      <div><h4>Quản lý công thức</h4><p>Lưu món ăn, nguyên liệu, thời gian nấu và cách thực hiện trong SQL Server.</p></div>
+    </div>
+    <div class="intro-item" onclick="scrollTo('#recipes')">
+      <div class="intro-icon"><i class="fas fa-filter"></i></div>
+      <div><h4>Lọc thông minh</h4><p>Phân loại món ăn theo nguyên liệu, danh mục, độ khó và thời gian nấu.</p></div>
+    </div>
+    <div class="intro-item" onclick="scrollTo('#fridge')">
+      <div class="intro-icon"><i class="fas fa-snowflake"></i></div>
+      <div><h4>Tủ lạnh có gì</h4><p>Nhập nguyên liệu đang có để hệ thống gợi ý món phù hợp nhất.</p></div>
+    </div>
+    <div class="intro-item" onclick="scrollTo('#international')">
+      <div class="intro-icon"><i class="fas fa-cloud"></i></div>
+      <div><h4>Kết nối API</h4><p>Tra cứu công thức quốc tế và gợi ý món ăn ngẫu nhiên qua Spoonacular API.</p></div>
+    </div>
+  </section>
+
+  <!-- FEATURE SHOWCASE -->
+  <section class="outside-section feature-showcase">
+    <div class="feature-panel dark">
+      <span class="section-eyebrow" style="background:var(--orange);"><i class="fas fa-star"></i> GIAO DIỆN BÊN NGOÀI</span>
+      <h2>Trang giới thiệu phần mềm nhìn chuyên nghiệp hơn</h2>
+      <p>Phần này dùng để thuyết trình với giảng viên: giới thiệu mục tiêu, công nghệ sử dụng, chức năng chính và điểm nổi bật của đề tài.</p>
+      <button class="btn-hero-primary" onclick="scrollTo('#fridge')"><i class="fas fa-magic"></i> Dùng thử tủ lạnh</button>
+    </div>
+    <div class="feature-panel">
+      <h2>Điểm nổi bật của ChefSmart</h2>
+      <p>Website không chỉ hiển thị món ăn mà còn có các phần mô tả rõ nghiệp vụ quản lý.</p>
+      <div class="feature-list">
+        <div class="feature-line"><i class="fas fa-check-circle"></i> Thêm, sửa, xóa công thức món ăn</div>
+        <div class="feature-line"><i class="fas fa-check-circle"></i> Quản lý nguyên liệu và danh mục món</div>
+        <div class="feature-line"><i class="fas fa-check-circle"></i> Truy vấn nâng cao với chức năng “Tủ lạnh có gì”</div>
+        <div class="feature-line"><i class="fas fa-check-circle"></i> Tích hợp API gợi ý món ăn quốc tế</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="outside-section">
+    <div class="section-header">
+      <h2>🚀 Quy trình sử dụng hệ thống</h2>
+      <a href="#recipes">Xem công thức <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="workflow-grid">
+      <div class="workflow-card" onclick="scrollTo('#fridge')"><div class="workflow-number">1</div><h4>Nhập nguyên liệu</h4><p>Người dùng nhập các nguyên liệu đang có trong tủ lạnh.</p></div>
+      <div class="workflow-card" onclick="scrollTo('#fridge')"><div class="workflow-number">2</div><h4>Truy vấn database</h4><p>Hệ thống so khớp nguyên liệu với bảng công thức trong SQL Server.</p></div>
+      <div class="workflow-card" onclick="scrollTo('#fridge')"><div class="workflow-number">3</div><h4>Gợi ý món ăn</h4><p>Các món phù hợp được sắp xếp theo số nguyên liệu trùng khớp.</p></div>
+      <div class="workflow-card" onclick="scrollTo('#recipes')"><div class="workflow-number">4</div><h4>Xem chi tiết</h4><p>Người dùng xem nguyên liệu, thời gian nấu, ảnh món và các bước thực hiện.</p></div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD PREVIEW -->
+  <section class="outside-section" id="dashboard">
+    <div class="section-header">
+      <h2>📊 Giao diện quản trị mẫu</h2>
+      <a href="#" onclick="toggleAddForm()">Thêm công thức <i class="fas fa-plus"></i></a>
+    </div>
+    <div class="dashboard-preview">
+      <aside class="dash-sidebar">
+        <h3>ChefSmart Admin</h3>
+        <div class="dash-menu">
+          <button class="dash-nav-btn active" onclick="window.location.href='dashboard.html'"><i class="fas fa-chart-pie"></i> Tổng quan</button>
+          <button class="dash-nav-btn" onclick="window.location.href='dashboard.html#recipes'"><i class="fas fa-utensils"></i> Công thức</button>
+          <button class="dash-nav-btn" onclick="window.location.href='dashboard.html#ingredients'"><i class="fas fa-carrot"></i> Nguyên liệu</button>
+          <button class="dash-nav-btn" onclick="window.location.href='dashboard.html#categories'"><i class="fas fa-folder"></i> Danh mục</button>
+          <button class="dash-nav-btn" onclick="window.location.href='dashboard.html#users'"><i class="fas fa-users"></i> Người dùng</button>
+        </div>
+      </aside>
+      <div class="dash-main">
+        <h3>Tổng quan dữ liệu</h3>
+        <div class="dash-cards">
+          <div class="dash-card"><strong>1,240</strong><span>Công thức</span></div>
+          <div class="dash-card"><strong>85</strong><span>Danh mục</span></div>
+          <div class="dash-card"><strong>4,820</strong><span>Nguyên liệu</span></div>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>Món ăn</th><th>Danh mục</th><th>Thời gian</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td>Phở bò Hà Nội</td><td>Ẩm thực Việt</td><td>3h</td><td>Đã duyệt</td></tr>
+            <tr><td>Cơm chiên Dương Châu</td><td>Cơm</td><td>25 phút</td><td>Đã duyệt</td></tr>
+            <tr><td>Gà nướng mật ong</td><td>Món nướng</td><td>1.5h</td><td>Chờ cập nhật</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD RECIPE FORM -->
+  <div class="add-form" id="addForm">
+    <div class="section-header">
+      <h2>✏️ Thêm công thức mới</h2>
+      <button class="btn-cancel" onclick="toggleAddForm()">✕ Đóng</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Tên món ăn</label>
+        <input type="text" class="form-control" placeholder="VD: Bún bò Huế...">
+      </div>
+      <div class="form-group">
+        <label>Danh mục</label>
+        <select class="form-control">
+          <option>Món chính</option>
+          <option>Canh/Súp</option>
+          <option>Tráng miệng</option>
+          <option>Đồ uống</option>
+          <option>Salad</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Thời gian nấu (phút)</label>
+        <input type="number" class="form-control" placeholder="VD: 45" min="1">
+      </div>
+      <div class="form-group">
+        <label>Độ khó</label>
+        <select class="form-control">
+          <option>Dễ</option>
+          <option>Trung bình</option>
+          <option>Khó</option>
+        </select>
+      </div>
+      <div class="form-group form-control-full">
+        <label>Mô tả ngắn</label>
+        <input type="text" class="form-control" placeholder="Mô tả ngắn về món ăn...">
+      </div>
+      <div class="form-group">
+        <label>Ảnh món ăn</label>
+        <input type="file" class="form-control" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label>Hoặc nhập link ảnh</label>
+        <input type="url" class="form-control" placeholder="VD: https://.../pho-bo.jpg">
+      </div>
+      <div class="form-group form-control-full">
+        <label>Nguyên liệu (mỗi dòng 1 nguyên liệu)</label>
+        <textarea class="form-control" placeholder="500g thịt bò&#10;1 bó rau thơm&#10;2 củ hành tây..."></textarea>
+      </div>
+      <div class="form-group form-control-full">
+        <label>Các bước thực hiện</label>
+        <textarea class="form-control" style="min-height: 130px;" placeholder="Bước 1: Sơ chế nguyên liệu...&#10;Bước 2: Ướp thịt..."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="toggleAddForm()"><i class="fas fa-times"></i> Hủy</button>
+      <button class="btn-submit" onclick="submitRecipe()"><i class="fas fa-save"></i> Lưu công thức</button>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section>
+    <div class="section-header">
+      <h2>📂 Danh mục phổ biến</h2>
+      <a href="#">Xem tất cả <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card active" onclick="filterCategory(this, 'all')">
+        <span class="category-emoji">🍽️</span>
+        <div class="category-name">Tất cả</div>
+        <div class="category-count">1,240 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'main')">
+        <span class="category-emoji">🍖</span>
+        <div class="category-name">Món chính</div>
+        <div class="category-count">380 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'soup')">
+        <span class="category-emoji">🍲</span>
+        <div class="category-name">Canh & Súp</div>
+        <div class="category-count">215 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'vn')">
+        <span class="category-emoji">🇻🇳</span>
+        <div class="category-name">Ẩm thực VN</div>
+        <div class="category-count">620 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'dessert')">
+        <span class="category-emoji">🍮</span>
+        <div class="category-name">Tráng miệng</div>
+        <div class="category-count">170 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'quick')">
+        <span class="category-emoji">⚡</span>
+        <div class="category-name">Dưới 30 phút</div>
+        <div class="category-count">310 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'veg')">
+        <span class="category-emoji">🥦</span>
+        <div class="category-name">Chay & Thuần chay</div>
+        <div class="category-count">145 món</div>
+      </div>
+      <div class="category-card" onclick="filterCategory(this, 'drink')">
+        <span class="category-emoji">🥤</span>
+        <div class="category-name">Đồ uống</div>
+        <div class="category-count">98 món</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRIDGE SECTION -->
+  <section class="fridge-section" id="fridge">
+    <div class="section-eyebrow"><i class="fas fa-snowflake"></i> TÍNH NĂNG ĐỘC ĐÁO</div>
+    <h2>🧊 Tủ lạnh có gì? — Nấu ngay!</h2>
+    <p>Nhập các nguyên liệu bạn có sẵn, hệ thống sẽ tự động gợi ý các món có thể nấu ngay hôm nay.</p>
+    <div class="ingredient-input-area">
+      <input type="text" class="ingredient-input" id="fridgeInput" placeholder="Nhập nguyên liệu (VD: thịt bò, cà chua, hành tây)..." onkeydown="if(event.key==='Enter') addIngredient()">
+      <button class="btn-add-ingredient" onclick="addIngredient()">
+        <i class="fas fa-plus"></i> Thêm
+      </button>
+    </div>
+    <div class="ingredients-list" id="ingredientsList">
+      <div class="ingredient-chip" onclick="removeIngredient(this)">🥩 Thịt bò <span class="remove">✕</span></div>
+      <div class="ingredient-chip" onclick="removeIngredient(this)">🧅 Hành tây <span class="remove">✕</span></div>
+      <div class="ingredient-chip" onclick="removeIngredient(this)">🥕 Cà rốt <span class="remove">✕</span></div>
+      <div class="ingredient-chip" onclick="removeIngredient(this)">🧄 Tỏi <span class="remove">✕</span></div>
+    </div>
+    <div class="fridge-actions-row">
+      <label for="fridgeMaxTime"><i class="fas fa-clock"></i> Thời gian tối đa:</label>
+      <select id="fridgeMaxTime" class="fridge-time-select">
+        <option value="">Không giới hạn</option>
+        <option value="30">Dưới 30 phút</option>
+        <option value="60">Dưới 60 phút</option>
+        <option value="120">Dưới 120 phút</option>
+      </select>
+      <button class="btn-search-fridge" onclick="searchFridge()">
+        <i class="fas fa-database"></i> Truy vấn SQL Server
+      </button>
+    </div>
+    <div id="databaseStatus" class="integration-status">⏳ Đang kiểm tra SQL Server...</div>
+    <div class="fridge-results" id="fridgeResults"></div>
+  </section>
+
+  <!-- POPULAR RECIPES -->
+  <section id="recipes">
+    <div class="section-header">
+      <h2>🔥 Công thức phổ biến</h2>
+      <a href="#">Xem tất cả <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-chip active" onclick="setFilter(this)">Tất cả</div>
+      <div class="filter-chip" onclick="setFilter(this)"><i class="fas fa-fire-alt"></i> Mới nhất</div>
+      <div class="filter-chip" onclick="setFilter(this)"><i class="fas fa-star"></i> Đánh giá cao</div>
+      <div class="filter-chip" onclick="setFilter(this)"><i class="fas fa-clock"></i> Nhanh nhất</div>
+      <div class="filter-chip" onclick="setFilter(this)"><i class="fas fa-leaf"></i> Ít calories</div>
+      <div class="filter-chip" onclick="setFilter(this)"><i class="fas fa-globe"></i> Quốc tế</div>
+    </div>
+    <div class="recipe-grid" id="recipeGrid">
+      <!-- Recipes rendered by JS -->
+    </div>
+  </section>
+
+  <!-- INTERNATIONAL API SECTION -->
+  <section class="api-section" id="international">
+    <div class="section-eyebrow" style="background: var(--orange);">
+      <i class="fas fa-satellite-dish"></i> SPOONACULAR API
+    </div>
+    <h2>🌍 Công thức quốc tế ngẫu nhiên</h2>
+    <p>Khám phá món ngẫu nhiên hoặc tra cứu công thức quốc tế trực tiếp qua Spoonacular API.</p>
+    <div class="api-live-controls">
+      <input id="internationalSearchInput" type="text" placeholder="Ví dụ: pasta, ramen, chicken..." onkeydown="if(event.key==='Enter') searchInternational()">
+      <button onclick="searchInternational()"><i class="fas fa-search"></i> Tra cứu API</button>
+      <button class="api-refresh-button" onclick="loadRandomInternational()"><i class="fas fa-random"></i> Gợi ý ngẫu nhiên</button>
+    </div>
+    <div id="apiStatus" class="integration-status api-status">⏳ Đang kiểm tra Spoonacular API...</div>
+    <div class="api-grid" id="apiGrid">
+      <!-- API cards rendered by JS -->
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">🍳</div>
+        <span class="logo-text">Chef<span>Smart</span></span>
+      </div>
+      <p>Phần mềm quản lý công thức nấu ăn thông minh. Được xây dựng với Python Flask, SQL Server và tích hợp Spoonacular API.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Tính năng</h5>
+      <a href="#recipes">Quản lý công thức</a>
+      <a href="#fridge">Tủ lạnh có gì</a>
+      <a href="#international">API quốc tế</a>
+      <a href="#">Lập kế hoạch bữa ăn</a>
+    </div>
+    <div class="footer-col">
+      <h5>Danh mục</h5>
+      <a href="#">Ẩm thực Việt Nam</a>
+      <a href="#">Ẩm thực Châu Á</a>
+      <a href="#">Ẩm thực Âu Mỹ</a>
+      <a href="#">Món chay</a>
+    </div>
+    <div class="footer-col">
+      <h5>Kỹ thuật</h5>
+      <a href="#">Python Flask</a>
+      <a href="#">SQL Server</a>
+      <a href="#">Spoonacular API</a>
+      <a href="#">pyodbc</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 ChefSmart — Đề tài 26 | Phân Tích Thiết Kế Hệ Thống</span>
+    <div class="tech-badges">
+      <span class="tech-badge">Python Flask</span>
+      <span class="tech-badge">SQL Server</span>
+      <span class="tech-badge">Visual Studio</span>
+      <span class="tech-badge">VS Code</span>
+    </div>
+  </div>
+</footer>
+
+<!-- RECIPE MODAL -->
+<div class="modal-overlay" id="recipeModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" onclick="if(event.target===this) closeAuth()">
+  <div class="auth-card">
+    <div class="auth-head">
+      <button class="auth-close" onclick="closeAuth()">✕</button>
+      <h3>Chào mừng đến ChefSmart</h3>
+      <p>Đăng nhập để quản lý công thức, lưu món yêu thích và đồng bộ dữ liệu.</p>
+    </div>
+    <div class="auth-body">
+      <div class="auth-tabs">
+        <button class="active" onclick="switchAuth(this, 'loginForm')">Đăng nhập</button>
+        <button onclick="switchAuth(this, 'registerForm')">Đăng ký</button>
+      </div>
+      <div class="auth-form active" id="loginForm">
+        <div id="loginError" style="display:none;margin-bottom:12px;padding:10px 12px;border-radius:8px;background:#fdecea;color:#b42318;font-size:.85rem"></div>
+        <div class="form-group"><label for="loginUsername">Tên đăng nhập</label><input id="loginUsername" class="form-control" placeholder="Nhập username" autocomplete="username"></div>
+        <div class="form-group"><label for="loginPassword">Mật khẩu</label><input id="loginPassword" type="password" class="form-control" placeholder="Nhập mật khẩu" autocomplete="current-password" onkeydown="if(event.key==='Enter') login()"></div>
+        <button class="btn-submit" style="width:100%;justify-content:center" onclick="login()"><i class="fas fa-right-to-bracket"></i> Đăng nhập</button>
+      </div>
+      <div class="auth-form" id="registerForm">
+        <div class="form-group"><label>Họ tên</label><input class="form-control" placeholder="Nhập họ tên"></div>
+        <div class="form-group"><label>Email</label><input type="email" class="form-control" placeholder="Nhập email"></div>
+        <div class="form-group"><label>Mật khẩu</label><input type="password" class="form-control" placeholder="Tạo mật khẩu"></div>
+        <button class="btn-submit" style="width:100%;justify-content:center" onclick="fakeAuth('Tạo tài khoản thành công!')"><i class="fas fa-user-plus"></i> Đăng ký</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</html>
